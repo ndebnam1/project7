@@ -30,36 +30,41 @@ class PhotoShare extends React.Component {
   render() {
     return (
       <HashRouter>
-      <div>
-      <Grid container spacing={8}>
-        <Grid item xs={12}>
-          <TopBar main_content={this.state.main_content}/>
-        </Grid>
-        <div className="main-topbar-buffer"/>
-        <Grid item sm={3}>
-          <Paper className="main-grid-item">
-            
-            <UserList/>
-          </Paper>
-        </Grid>
-        <Grid item sm={9}>
-          <Paper className="main-grid-item">
-            <Switch>
-              <Route path="/user/list" render={props => <UserList {...props} changeMainContent={this.changeMainContent} />} />
-              <Route path="/users/:userId" render={props => <UserDetail {...props} changeMainContent={this.changeMainContent}/> } />
-              <Route path="/photos/:userId" render ={props => <UserPhotos {...props} changeMainContent={this.changeMainContent}/> } />
-            </Switch>
-            
-          </Paper>
-        </Grid>
-      </Grid>
-      </div>
+        <div>
+          <Grid container spacing={8}>
+            <Grid item xs={12}>
+              <TopBar main_content={this.state.main_content} />
+            </Grid>
+            <div className="main-topbar-buffer" />
+            <Grid item sm={3}>
+              <Paper className="main-grid-item">
+
+                <UserList />
+              </Paper>
+            </Grid>
+            <Grid item sm={9}>
+              <Paper className="main-grid-item">
+                <Switch>
+                  <Route path="/user/list" render={props => <UserList {...props} changeMainContent={this.changeMainContent} />} />
+                  {
+                    this.userIsLoggedIn ?
+                      <Route path="/users/:id" component={UserDetail} />
+                      :
+                      <Redirect path="/users/:id" to="/login-register" />
+                  }
+                  <Route path="/photos/:userId" render={props => <UserPhotos {...props} changeMainContent={this.changeMainContent} />} />
+                </Switch>
+
+              </Paper>
+            </Grid>
+          </Grid>
+        </div>
       </HashRouter>
     );
   }
 }
 
 ReactDOM.render(
-  <PhotoShare/>,
+  <PhotoShare />,
   document.getElementById('photoshareapp')
 );

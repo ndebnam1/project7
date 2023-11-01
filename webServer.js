@@ -28,7 +28,9 @@
  *                      should have all the Comments on the Photo (JSON format)
  *
  */
-
+const session = require("express-session");
+const bodyParser = require("body-parser");
+const multer = require("multer");
 var mongoose = require('mongoose');
 mongoose.Promise = require('bluebird');
 
@@ -50,7 +52,8 @@ mongoose.connect('mongodb://localhost/project6', { useNewUrlParser: true, useUni
 // We have the express static module (http://expressjs.com/en/starter/static-files.html) do all
 // the work for us.
 app.use(express.static(__dirname));
-
+app.use(session({secret: "secretKey", resave: false, saveUninitialized: false}));
+app.use(bodyParser.json());
 
 app.get('/', function (request, response) {
     response.send('Simple web server of files from ' + __dirname);
