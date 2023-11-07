@@ -46,6 +46,7 @@ class PhotoShare extends React.Component {
             <Grid item sm={9}>
               <Paper className="main-grid-item">
                 <Switch>
+                  <Route exact path="/" render={props => <LoginRegister {...props} changeMainContent={this.changeMainContent} />} />
                   <Route path="/user/list" render={props => <UserList {...props} changeMainContent={this.changeMainContent} />} />
                   <Route path="/users/:userId" render={props => <UserDetail {...props} changeMainContent={this.changeMainContent} />} />
                   <Route path="/photos/:userId" render={props => <UserPhotos {...props} changeMainContent={this.changeMainContent} />} />
